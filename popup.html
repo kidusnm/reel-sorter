@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  :root { --bg: #121417; --bg2: #1B1E25; --bg3: #252932; --line: #2A2E37; --text: #F4F5F7; --muted: #8F96A3; --accent: #C8F542; --ink: #11130F; }
+  * { box-sizing: border-box; margin: 0; }
+  body { width: 300px; background: var(--bg); color: var(--text); font: 13px/1.45 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+  header { display: flex; align-items: center; gap: 10px; padding: 16px 16px 14px; border-bottom: 1px solid var(--line); }
+  header img { width: 32px; height: 32px; }
+  .brand { font-weight: 800; font-size: 15px; letter-spacing: -.01em; }
+  .tag { color: var(--muted); font-size: 12px; }
+  main { padding: 16px; }
+  .acct { color: var(--muted); font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .stat { display: flex; align-items: baseline; gap: 6px; margin-top: 2px; }
+  .num { font-size: 34px; font-weight: 800; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+  .lbl { color: var(--muted); }
+  .status { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; margin: 2px 0 16px; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); }
+  .loading .dot { background: var(--accent); animation: pulse 1s ease-in-out infinite; }
+  .done .dot { background: var(--accent); }
+  @keyframes pulse { 50% { opacity: .25; } }
+  button { display: flex; align-items: center; justify-content: center; width: 100%; height: 38px; margin-top: 8px; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--bg2); color: var(--text); font: 600 13px Inter, -apple-system, sans-serif; cursor: pointer; }
+  button:hover { background: var(--bg3); }
+  button.primary { background: var(--accent); color: var(--ink); border-color: transparent; }
+  .steps { list-style: none; padding: 0; display: grid; gap: 10px; }
+  .steps li { display: flex; gap: 10px; }
+  .steps b { flex: none; width: 20px; height: 20px; border-radius: 50%; background: var(--bg3); color: var(--accent); font-size: 11px; display: grid; place-items: center; }
+  .note { color: var(--muted); }
+  footer { display: flex; justify-content: space-between; padding: 10px 16px 14px; color: var(--muted); font-size: 11px; border-top: 1px solid var(--line); }
+  .update { margin: 14px 16px 0; padding: 12px; border-radius: 12px; background: rgba(200,245,66,.08); border: 1px solid rgba(200,245,66,.35); }
+  .update h2 { font-size: 13px; color: var(--accent); }
+  .update .steps { margin: 10px 0 4px; font-size: 12px; gap: 8px; }
+  .update button { height: 34px; }
+  .update + main { padding-top: 12px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+  <header>
+    <img src="icons/icon128.png" alt="">
+    <div>
+      <div class="brand">Reel Sorter</div>
+      <div class="tag">Every reel, ranked by views</div>
+    </div>
+  </header>
+  <section class="update" id="update" hidden>
+    <h2 id="updTitle"></h2>
+    <ol class="steps">
+      <li><b>1</b><span>Download and unzip the new version.</span></li>
+      <li><b>2</b><span>Replace your old <strong>reel-sorter</strong> folder with the new one, same place.</span></li>
+      <li><b>3</b><span>On the extensions page, press the reload arrow on Reel Sorter.</span></li>
+    </ol>
+    <button class="primary" id="updGet">Download update</button>
+    <button id="updExt">Open extensions page</button>
+  </section>
+  <main>
+    <section id="reels" hidden>
+      <div class="acct" id="acct"></div>
+      <div class="stat"><span class="num" id="count">0</span><span class="lbl">reels loaded</span></div>
+      <div class="status" id="status"><span class="dot"></span><span id="statusText"></span></div>
+      <button class="primary" id="load"></button>
+      <button id="grid">Open sorted grid</button>
+    </section>
+    <section id="site" hidden>
+      <ol class="steps">
+        <li><b>1</b><span>Open a profile’s <strong>Reels</strong> tab to sort the whole page by views.</span></li>
+        <li><b>2</b><span>Hover any reel tile and press <strong>Download</strong> to save the video.</span></li>
+      </ol>
+    </section>
+    <section id="other" hidden>
+      <ol class="steps">
+        <li><b>1</b><span>Go to an Instagram or Facebook profile and open its <strong>Reels</strong> tab.</span></li>
+        <li><b>2</b><span>Press <strong>Load all reels</strong> in the panel at the bottom right.</span></li>
+        <li><b>3</b><span>Hover any reel and press <strong>Download</strong>.</span></li>
+      </ol>
+      <p class="note" style="margin-top:12px">Already on Instagram or Facebook? Refresh the page once.</p>
+    </section>
+  </main>
+  <footer><span>Free · runs in your browser · no data collected</span><span>v<span id="ver"></span></span></footer>
+  <script src="popup.js"></script>
+</body>
+</html>
